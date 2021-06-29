@@ -38,8 +38,9 @@ execute 'python_link' do
 end
 
 # composer setup
-include_recipe 'composer::self_update'
+#include_recipe 'composer::self_update'
 
+<<<<<<< HEAD
 execute 'console_autocomplete' do
   command <<-CMD
     composer global require bamarni/symfony-console-autocomplete
@@ -62,3 +63,10 @@ npm_package 'matomo-js' do
     json true
     user 'vagrant'
 end
+=======
+#composer_project node['matomo']['docroot'] do
+#  dev    true
+#  quiet  true
+#  action :install
+#end
+>>>>>>> 44e159f (use php8)
