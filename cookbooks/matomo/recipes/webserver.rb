@@ -1,4 +1,8 @@
-packages = %w(php7.2 php7.2-curl php7.2-mbstring php7.2-gd php7.2-mysql php7.2-bz2 php7.2-zip php7.2-xdebug php7.2-redis php7.2-soap)
+execute 'php8.0' do
+  command 'add-apt-repository ppa:ondrej/php -y'
+end
+
+packages = %w(php8.0 php8.0-curl php8.0-dom php8.0-mbstring php8.0-gd php8.0-mysql php8.0-bz2 php8.0-zip php8.0-xdebug php8.0-redis php8.0-soap)
 
 packages.each do |pkg|
   package pkg do
@@ -19,7 +23,7 @@ app_dir           = '/var/www/basic_site'
 
 # Needs to be disabled before apache install as it otherwise fails with:
 # > STDERR: ERROR: The following modules depend on mpm_prefork and need to be disabled first: php7.2
-apache2_module 'php7.2' do
+apache2_module 'php8.0' do
   action :disable
 end
 
@@ -69,6 +73,10 @@ end
 
 apache2_site 'matomo' do
   action :enable
+end
+
+execute 'fix_apache_mod' do
+  command 'sudo echo "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so" > /etc/apache2/mods-available/php8.0.load'
 end
 
 # php-fpm setup
