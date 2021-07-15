@@ -7,9 +7,11 @@ vm_ip: 192.168.99.100
 vm_name: matomo
 vm_type: minimal
 
-server_name: dev.matomo.org
+server_name: dev.matomo.io
 source: ../matomo
 source_device_detector: ../device-detector
+source_searchengine_social_list: ../searchengine-and-social-list
+source_matomo_tracker: ../php-tracker
 
 mysql_database: matomo
 mysql_password: matomo

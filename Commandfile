@@ -13,6 +13,14 @@ command 'console',
     parameters: { command: { optional: true } },
     script: %(cd /srv/matomo && ./console %{command})
 
+command 'xdebug-disable',
+    desc: 'Enables xdebug',
+    script: %(sudo phpdismod xdebug)
+
+command 'xdebug-enable',
+    desc: 'Enables xdebug',
+    script: %(sudo phpenmod xdebug)
+
 command 'dump-export',
     desc: 'Dumps the matomo database currently used by the machine',
     script: %([ -d /vagrant/sqldumps ] || mkdir /vagrant/sqldumps;
@@ -52,4 +60,30 @@ if File.directory?(File.expand_path(config.get('source_device_detector')))
         desc: 'Generates device detector README report',
         parameters: {},
         script: %(cd /srv/device-detector && php misc/readme-report.php)
+end
+
+searchengine_social_list_path = File.expand_path(config.get('source_searchengine_social_list'))
+
+if File.directory?(searchengine_social_list_path)
+    command 'mount-searchlist',
+        desc: 'Overwrites Matomos integrated search engine and socials list with configured repo',
+        parameters: {},
+        script: %(sudo mount --bind /srv/searchengine-and-social-list/ /srv/matomo/vendor/matomo/searchengine-and-social-list/)
+    command 'unmount-searchlist',
+        desc: 'Removes overwrite of Matomos integrated search engine and socials list with configured repo',
+        parameters: {},
+        script: %(sudo umount /srv/matomo/vendor/matomo/searchengine-and-social-list/)
+end
+
+matomo_tracker_path = File.expand_path(config.get('source_matomo_tracker'))
+
+if File.directory?(matomo_tracker_path)
+    command 'mount-tracker',
+        desc: 'Overwrites Matomos integrated php tracker with configured repo',
+        parameters: {},
+        script: %(sudo mount --bind /srv/php-tracker/ /srv/matomo/vendor/matomo/matomo-php-tracker/)
+    command 'unmount-tracker',
+        desc: 'Removes overwrite of Matomos integrated php tracker with configured repo',
+        parameters: {},
+        script: %(sudo umount /srv/matomo/vendor/matomo/matomo-php-tracker/)
 end
