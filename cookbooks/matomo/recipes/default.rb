@@ -15,7 +15,7 @@ unless node['matomo']['vm_type'] == 'minimal'
 end
 
 
-packages = %w(git curl python2.7)
+packages = %w(git curl python3)
 
 unless node['matomo']['vm_type'] == 'minimal'
   packages += %w(git-lfs openjdk-8-jre woff2)
