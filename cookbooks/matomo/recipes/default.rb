@@ -18,7 +18,8 @@ end
 packages = %w(git curl python3)
 
 unless node['matomo']['vm_type'] == 'minimal'
-  packages += %w(git-lfs openjdk-8-jre woff2)
+  # note: libxss1 is required for chrome to run correctly as node module
+  packages += %w(git-lfs openjdk-8-jre woff2 libxss1)
 
   packagecloud_repo 'github/git-lfs' do
     type 'deb'
