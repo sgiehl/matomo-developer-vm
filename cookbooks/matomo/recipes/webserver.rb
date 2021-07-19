@@ -11,12 +11,18 @@ execute 'disable_xdebug' do
   command 'sudo phpdismod xdebug'
 end
 
+ssl_cert_file     = "#{apache_dir}/ssl/server.crt"
+ssl_cert_key_file = "#{apache_dir}/ssl/server.key"
+app_dir           = '/var/www/basic_site'
+
 # apache setup
+
+# Needs to be disabled before apache install as it otherwise fails with:
+# > STDERR: ERROR: The following modules depend on mpm_prefork and need to be disabled first: php7.2
 apache2_module 'php7.2' do
   action :disable
 end
 
-# application setup
 apache2_install 'default'
 
 service 'apache2' do
@@ -28,12 +34,32 @@ end
 apache2_module 'proxy'
 apache2_module 'proxy_fcgi'
 
+apache2_module 'ssl'
+apache2_mod_ssl ''
+
+openssl_x509_certificate 'create-certificate' do
+  path ssl_cert_file
+  key_file ssl_cert_key_file
+  expire 90
+  renew_before_expiry 1
+  common_name node['matomo']['server_name']
+  owner 'root'
+  group 'root'
+  email 'vm@matomo.org'
+  org_unit 'Matomo'
+  org 'Matomo.org'
+  city 'Everywhere'
+  mode '0640'
+end
+
 template 'matomo' do
   source 'matomo.conf.erb'
   path "#{apache_dir}/sites-available/matomo.conf"
   variables(
     server_name: node['matomo']['server_name'],
-    docroot: node['matomo']['docroot']
+    docroot: node['matomo']['docroot'],
+    ssl_cert_file: ssl_cert_file,
+    ssl_cert_key_file: ssl_cert_key_file
   )
 end
 

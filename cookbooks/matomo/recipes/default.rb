@@ -15,7 +15,7 @@ unless node['matomo']['vm_type'] == 'minimal'
 end
 
 
-packages = %w(git curl python3)
+packages = %w(git unzip curl python3)
 
 unless node['matomo']['vm_type'] == 'minimal'
   # note: libxss1 is required for chrome to run correctly as node module
