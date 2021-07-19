@@ -1,3 +1,25 @@
+<VirtualHost *:443>
+  ServerName   <%= @server_name %>
+  DocumentRoot <%= @docroot %>
+
+  <Location />
+    Options FollowSymLinks
+    AllowOverride All
+
+    Require all granted
+  </Location>
+
+  Alias "/tests/PHPUnit/proxy/plugins" "<%= @docroot %>/plugins"
+
+  <IfModule mod_ssl.c>
+    SSLEngine on
+    SSLCertificateFile <%= @ssl_cert_file %>
+    SSLCertificateKeyFile <%= @ssl_cert_key_file %>
+  </IfModule>
+
+  ProxyPassMatch "^/.*\.php(/.*)?$" "fcgi://localhost:9000/<%= @docroot.gsub(/^\/+|\/+$/, '') %>/"
+</VirtualHost>
+
 <VirtualHost *:80>
   ServerName   <%= @server_name %>
   DocumentRoot <%= @docroot %>
