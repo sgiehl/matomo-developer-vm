@@ -4,7 +4,7 @@ default['matomo']['docroot']        = '/srv/matomo'
 default['matomo']['mysql_database'] = 'matomo'
 default['matomo']['mysql_password'] = 'matomo'
 default['matomo']['mysql_username'] = 'matomo'
-default['matomo']['server_name']    = 'dev.matomo.org'
+default['matomo']['server_name']    = 'dev.matomo.io'
 
 default['redisio']['bin_path']        = '/usr/bin'
 default['redisio']['package_install'] = true

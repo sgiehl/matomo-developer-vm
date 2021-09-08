@@ -80,3 +80,5 @@ php_fpm_pool 'matomo' do
   listen_user  'vagrant'
   listen_group 'vagrant'
 end
+
+include_recipe "chef-mailcatcher::default"
