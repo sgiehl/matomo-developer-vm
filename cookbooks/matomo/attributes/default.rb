@@ -17,6 +17,7 @@ default['nodejs']['version'] = '16.18.1'
 default['nodejs']['binary']['checksum'] = '8949919fc52543efae3bfd057261927c616978614926682ad642915f98fe1981'
 
 default['php']['fpm_ini_control'] = true
+<<<<<<< HEAD
 default['php']['directives'] = {
                                  :'memory_limit' => '1024m',
                                  :'max_execution_time' => 90,
@@ -26,7 +27,7 @@ default['php']['directives'] = {
                                  :'xdebug.output_dir' => '/srv/matomo',
                                  :'profiler_output_name' => 'cachegrind.out.%p'
                                }
-default['php']['version']          = '8.0.9'
+default['php']['version']          = '8.0.17'
 default['php']['checksum']         = 'a554a510190e726ebe7157fb00b4aceabdb50c679430510a3b93cbf5d7546e44'
 default['php']['conf_dir']         = '/etc/php/8.0/cli'
 default['php']['src_deps']         = %w(libbz2-dev libc-client2007e-dev libcurl4-gnutls-dev libfreetype6-dev libgmp3-dev libjpeg62-dev libkrb5-dev libmcrypt-dev libpng-dev libssl-dev pkg-config libxml2-dev libsqlite3-dev libonig-dev)
