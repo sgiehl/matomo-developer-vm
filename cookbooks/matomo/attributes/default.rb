@@ -10,8 +10,15 @@ default['redisio']['bin_path']        = '/usr/bin'
 default['redisio']['package_install'] = true
 default['redisio']['version']         = nil
 
-default['nodejs']['version'] = '14.17.5'
-default['nodejs']['binary']['checksum'] = 'dc04c7e60235ff73536ba0d9e50638090f60cacabfd83184082dce3b330afc6e'
+default['nodejs']['install_method'] = 'binary'
+default['nodejs']['version'] = '16.18.1'
+default['nodejs']['binary']['checksum'] = '8949919fc52543efae3bfd057261927c616978614926682ad642915f98fe1981'
 
 default['php']['fpm_ini_control'] = true
-default['php']['directives'] = { :'xdebug.max_nesting_level' => 200, :'memory_limit' => '512m', :'max_execution_time' => 90 }
+default['php']['directives'] = {
+                                 :'xdebug.max_nesting_level' => 200,
+                                 :'memory_limit' => '1024m',
+                                 :'max_execution_time' => 90,
+                                 :'xdebug.remote_enable' => 1,
+                                 :'xdebug.remote_host' => '192.168.99.1'
+                               }

@@ -134,6 +134,21 @@ Vagrant.configure('2') do |global|
                    sudo mount --bind /srv/matomo_node_modules /srv/matomo/tests/lib/screenshot-testing/node_modules',
           run:    'always'
 
+        # ensure node_modules directory is located within the vm (doesn't work located on windows fs, due to symlinks)
+        matomo.vm.provision 'mount_node_modules_core',
+          type:   'shell',
+          inline: 'mkdir -m 777 -p /srv/mount_node_modules_core
+                   sudo mount --bind /srv/mount_node_modules_core /srv/matomo/node_modules/',
+          run:    'always'
+
+        # required to run onclickupdate tests
+        matomo.vm.provision 'mount_latestStableInstall',
+          type:   'shell',
+          inline: 'mkdir -m 777 -p /srv/mount_latestStableInstall
+                   mkdir -m 777 -p /srv/matomo/latestStableInstall/
+                   sudo mount --bind /srv/mount_latestStableInstall /srv/matomo/latestStableInstall/',
+          run:    'always'
+
         # ensure node_modules are located within the vm (doesn't work located on windows fs, due to path depth)
         matomo.vm.provision 'mount_node_modules_angular',
           type:   'shell',

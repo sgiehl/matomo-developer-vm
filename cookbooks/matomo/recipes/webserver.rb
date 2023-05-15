@@ -1,4 +1,4 @@
-packages = %w(php7.2 php7.2-curl php7.2-mbstring php7.2-gd php7.2-mysql php7.2-bz2 php7.2-zip php7.2-xdebug php7.2-redis php7.2-soap)
+packages = %w(php7.2 php7.2-curl php7.2-mbstring php7.2-gd php7.2-mysql php7.2-bz2 php7.2-zip php7.2-xdebug php7.2-redis php7.2-soap php7.2-dom)
 
 packages.each do |pkg|
   package pkg do
@@ -79,6 +79,19 @@ php_fpm_pool 'matomo' do
   listen       '127.0.0.1:9000'
   listen_user  'vagrant'
   listen_group 'vagrant'
+end
+
+# mailcatcher requires sqlite3, but the latest version fails to install
+packages = %w(ruby ruby-dev libsqlite3-dev build-essential)
+packages.each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+gem_package 'sqlite3' do
+  version '1.4.4'
+  package_name 'sqlite3'
 end
 
 include_recipe "chef-mailcatcher::default"

@@ -40,8 +40,25 @@ end
 # composer setup
 include_recipe 'composer::self_update'
 
+execute 'console_autocomplete' do
+  command <<-CMD
+    composer global require bamarni/symfony-console-autocomplete
+    echo 'PATH="$PATH:/home/vagrant/.config/composer/vendor/bin" \
+          eval "$(symfony-autocomplete)"' > /home/vagrant/.bash_profile
+  CMD
+end
+
 composer_project node['matomo']['docroot'] do
   dev    true
   quiet  true
   action :install
+end
+
+# run npm install
+include_recipe "nodejs"
+
+npm_package 'screenshot-testing' do
+    path '/srv/matomo/'
+    json true
+    user 'vagrant'
 end

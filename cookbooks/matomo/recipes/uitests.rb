@@ -1,6 +1,5 @@
 
 include_recipe "chrome"
-include_recipe "nodejs::nodejs_from_binary"
 
 npm_package 'screenshot-testing' do
     path '/srv/matomo/tests/lib/screenshot-testing'
