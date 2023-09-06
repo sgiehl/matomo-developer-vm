@@ -89,9 +89,29 @@ packages.each do |pkg|
   end
 end
 
+gem_package 'net-protocol' do
+  version '0.1.2'
+  package_name 'net-protocol'
+end
+
+gem_package 'net-smtp' do
+  version '0.3.0'
+  package_name 'net-smtp'
+end
+
+gem_package 'net-imap' do
+  version '0.2.2'
+  package_name 'net-imap'
+end
+
 gem_package 'sqlite3' do
   version '1.4.4'
   package_name 'sqlite3'
+end
+
+gem_package 'mini_mime' do
+  version '1.1.2'
+  package_name 'mini_mime'
 end
 
 include_recipe "chef-mailcatcher::default"

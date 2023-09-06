@@ -6,6 +6,8 @@ default['matomo']['mysql_password'] = 'matomo'
 default['matomo']['mysql_username'] = 'matomo'
 default['matomo']['server_name']    = 'dev.matomo.io'
 
+default['mailcatcher']['version'] = '0.8.2'
+
 default['redisio']['bin_path']        = '/usr/bin'
 default['redisio']['package_install'] = true
 default['redisio']['version']         = nil
