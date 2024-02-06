@@ -42,9 +42,13 @@ Choose `minimal` for a default set up that includes everything for basic develop
 * Apache configured to use php-fpm
 * Python3 (for log importer)
 * Composer
+* NodeJS
+* Git
+* Mailcatcher
 
 Chosse `full` for full set up, which includes some additional tools and actions to run UI tests or javascript tests on command line. This additionally includes:
 
+* Git LFS
 * Redis server
 * Chrome, ImageMagick (for UI tests)
 * Perl package `MaxMind::DB::Writer::Serializer` (required to build the GeoIP databases used for testing)

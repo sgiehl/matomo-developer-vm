@@ -57,7 +57,7 @@ end
 # run npm install
 include_recipe "nodejs"
 
-npm_package 'screenshot-testing' do
+npm_package 'matomo-js' do
     path '/srv/matomo/'
     json true
     user 'vagrant'
