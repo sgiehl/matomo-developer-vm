@@ -89,6 +89,11 @@ packages.each do |pkg|
   end
 end
 
+gem_package 'timeout' do
+  version '0.4.0'
+  package_name 'timeout'
+end
+
 gem_package 'net-protocol' do
   version '0.1.2'
   package_name 'net-protocol'

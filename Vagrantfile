@@ -34,6 +34,7 @@ Vagrant.configure('2') do |global|
       matomo.vm.hostname = config.get('server_name')
 
     matomo.vm.network 'private_network', ip: config.get('vm_ip')
+    matomo.vm.boot_timeout = 600
 
     mountoptions = false
 
@@ -142,6 +143,13 @@ Vagrant.configure('2') do |global|
           run:    'always'
 
         # required to run onclickupdate tests
+        matomo.vm.provision 'mount_matomo_last_version_git',
+          type:   'shell',
+          inline: 'mkdir -m 777 -p /srv/mount_matomo_last_version_git
+                   mkdir -m 777 -p /srv/matomo/matomo_last_version_git/
+                   sudo mount --bind /srv/mount_matomo_last_version_git /srv/matomo/matomo_last_version_git/',
+          run:    'always'
+
         matomo.vm.provision 'mount_latestStableInstall',
           type:   'shell',
           inline: 'mkdir -m 777 -p /srv/mount_latestStableInstall

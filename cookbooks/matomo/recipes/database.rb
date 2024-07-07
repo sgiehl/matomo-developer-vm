@@ -45,3 +45,13 @@ end
 execute 'mysql_start' do # ~FC004
   command '/etc/init.d/mysql start || true'
 end
+
+execute 'create_mycnf' do
+  command <<-MYCNF
+    echo '
+[client]
+user=#{node['matomo']['mysql_username']}
+password=#{node['matomo']['mysql_password']}
+    ' > ~/.my.cnf
+  MYCNF
+end
