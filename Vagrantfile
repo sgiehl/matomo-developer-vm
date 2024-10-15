@@ -92,9 +92,9 @@ Vagrant.configure('2') do |global|
     matomo.vm.provider 'virtualbox' do |vb|
       vb.customize ['modifyvm', :id, '--name', config.get('vm_name')]
 
-      vb.cpus   = config.get('vm_type') == 'minimal' ? 2 : 4
+      vb.cpus   = config.get('vm_type') == 'minimal' ? 2 : 6
       vb.gui    = false
-      vb.memory = config.get('vm_type') == 'minimal' ? 4096 : 8192
+      vb.memory = config.get('vm_type') == 'minimal' ? 4096 : 12288
     end
 
     # Needed for running UI tests (on windows)

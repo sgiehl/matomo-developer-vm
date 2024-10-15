@@ -52,6 +52,6 @@ execute 'create_mycnf' do
 [client]
 user=#{node['matomo']['mysql_username']}
 password=#{node['matomo']['mysql_password']}
-    ' > ~/.my.cnf
+    ' > /home/vagrant/.my.cnf
   MYCNF
 end
