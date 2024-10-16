@@ -1,7 +1,8 @@
 source 'https://supermarket.chef.io'
 
 cookbook 'apache2', '~> 8.14.1'
-cookbook 'php', '~> 9.2.0'
+cookbook 'ondrej_ppa_ubuntu', '~> 0.1.0'
+cookbook 'php', '~> 10.1.0'
 cookbook 'apt', '~> 7.4.2'
 cookbook 'composer', '~> 3.0.1'
 cookbook 'packagecloud', '~> 1.0.1'

@@ -1,20 +1,3 @@
-execute 'php8.0' do
-  command 'add-apt-repository ppa:ondrej/php -y'
-end
-
-packages = %w(php8.0 php8.0-curl php8.0-dom php8.0-mbstring php8.0-gd php8.0-mysql php8.0-bz2 php8.0-zip php8.0-xdebug php8.0-redis php8.0-soap)
-
-packages.each do |pkg|
-  package pkg do
-    action :install
-  end
-end
-
-# disable xdebug by default
-execute 'disable_xdebug' do
-  command 'sudo phpdismod xdebug'
-end
-
 ssl_cert_file     = "#{apache_dir}/ssl/server.crt"
 ssl_cert_key_file = "#{apache_dir}/ssl/server.key"
 app_dir           = '/var/www/basic_site'
@@ -22,8 +5,8 @@ app_dir           = '/var/www/basic_site'
 # apache setup
 
 # Needs to be disabled before apache install as it otherwise fails with:
-# > STDERR: ERROR: The following modules depend on mpm_prefork and need to be disabled first: php7.2
-apache2_module 'php8.0' do
+# > STDERR: ERROR: The following modules depend on mpm_prefork and need to be disabled first: php8.2
+apache2_module 'php8.2' do
   action :disable
 end
 
@@ -75,8 +58,17 @@ apache2_site 'matomo' do
   action :enable
 end
 
-execute 'fix_apache_mod' do
-  command 'sudo echo "LoadModule php_module /usr/lib/apache2/modules/libphp8.0.so" > /etc/apache2/mods-available/php8.0.load'
+#execute 'fix_apache_mod' do
+#  command 'sudo echo "LoadModule php_module /usr/lib/apache2/modules/libphp8.2.so" > /etc/apache2/mods-available/php8.2.load'
+#end
+
+include_recipe 'ondrej_ppa_ubuntu'
+
+php_install 'php' do
+    directives node['php']['directives']
+    conf_dir   node['php']['conf_dir']
+    packages   node['php']['packages']
+  action :install
 end
 
 # php-fpm setup
@@ -87,7 +79,26 @@ php_fpm_pool 'matomo' do
   listen       '127.0.0.1:9000'
   listen_user  'vagrant'
   listen_group 'vagrant'
+
+  fpm_ini_control   node['php']['fpm_ini_control']
+  fpm_package       node['php']['fpm_package']
+  pool_dir          node['php']['fpm_pooldir']
+  service           node['php']['fpm_service']
+  default_conf      node['php']['fpm_default_conf']
+  fpm_conf_dir      node['php']['fpm_conf_dir']
 end
+
+# disable xdebug by default
+#execute 'disable_xdebug' do
+#  command 'sudo phpdismod xdebug'
+#end
+
+php_ini 'fpm' do
+  conf_dir node['php']['fpm_conf_dir']
+  directives node['php']['directives']
+  action :add
+end
+
 
 # mailcatcher requires sqlite3, but the latest version fails to install
 packages = %w(ruby ruby-dev libsqlite3-dev build-essential)

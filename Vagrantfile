@@ -30,7 +30,7 @@ Vagrant.configure('2') do |global|
   global.ssh.forward_agent = true
 
   global.vm.define config.get('vm_name') do |matomo|
-      matomo.vm.box = "ubuntu/bionic64"
+      matomo.vm.box = "ubuntu/focal64"
       matomo.vm.hostname = config.get('server_name')
 
     matomo.vm.network 'private_network', ip: config.get('vm_ip')

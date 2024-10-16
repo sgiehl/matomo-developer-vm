@@ -23,9 +23,10 @@ end
 execute 'matomo_database_user' do
   command <<-USERSQL
   mysql -uroot -e '
-      GRANT ALL ON *.*
-      TO "#{node['matomo']['mysql_username']}"@"localhost"
+      CREATE USER IF NOT EXISTS "#{node['matomo']['mysql_username']}"@"localhost"
       IDENTIFIED BY "#{node['matomo']['mysql_password']}";
+      GRANT ALL ON *.*
+      TO "#{node['matomo']['mysql_username']}"@"localhost";
   '
   USERSQL
 end
