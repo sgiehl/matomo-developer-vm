@@ -1,6 +1,18 @@
-
 package 'mysql-server' do
   action :install
+end
+
+execute 'create_mysqlcnf' do
+  command <<-MYCNF
+    echo '
+[mysql]
+local-infile
+
+[mysqld]
+local-infile
+secure_file_priv = ""
+    ' > /etc/mysql/conf.d/mysql.cnf
+  MYCNF
 end
 
 execute 'matomo_database' do
@@ -42,9 +54,9 @@ unless node['matomo']['vm_type'] == 'minimal'
 end
 
 # mysql setup
-# HACK: ensure mysql is started in docker after installation
+# HACK: ensure mysql is started after installation
 execute 'mysql_start' do # ~FC004
-  command '/etc/init.d/mysql start || true'
+  command '/etc/init.d/mysql restart || true'
 end
 
 execute 'create_mycnf' do

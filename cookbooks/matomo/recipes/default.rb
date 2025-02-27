@@ -40,15 +40,16 @@ end
 # composer setup
 include_recipe 'composer::self_update'
 
-execute 'console_autocomplete' do
-  command <<-CMD
-    composer global require bamarni/symfony-console-autocomplete
-    echo 'PATH="$PATH:/home/vagrant/.config/composer/vendor/bin" \
-          eval "$(symfony-autocomplete)"' > /home/vagrant/.bash_profile
-  CMD
-end
+#execute 'console_autocomplete' do
+#  command <<-CMD
+#    composer global require bamarni/symfony-console-autocomplete
+#    echo 'PATH="$PATH:/home/vagrant/.config/composer/vendor/bin" \
+#          eval "$(symfony-autocomplete)"' > /home/vagrant/.bash_profile
+#  CMD
+#end
 
 composer_project node['matomo']['docroot'] do
+  user   'vagrant'
   dev    true
   quiet  true
   action :install
